@@ -1,4 +1,4 @@
-I"?<h1 id="android逆向">Android逆向</h1>
+I"5<h1 id="android逆向">Android逆向</h1>
 
 <h2 id="1工具">1.工具</h2>
 
@@ -23,10 +23,10 @@
   <li>
     <p>然后就会在当前文件夹中生成<strong>classes-dex2jar.jar</strong></p>
 
-    <p><img src="img/2019-09-15-1.jpg" alt="1568537121003" /></p>
+    <p><img src="/img/2019-09-15-1.jpg" alt="" /></p>
   </li>
   <li>然后用<strong>jd-gui</strong>打开，即可查看源码
-<img src="img/2019-09-15-2.jpg" alt="1568537247612" /></li>
+<img src="/img/2019-09-15-2.jpg" alt="1568537247612" /></li>
 </ul>
 
 <h2 id="2修改java源码">2.修改java源码</h2>
@@ -42,7 +42,7 @@
 
 <p>然后会在当前目录生成test目录，目录内容大体如下：</p>
 
-<p><img src="img/2019-09-15-1.jpg" alt="1568537520908" /></p>
+<p><img src="/img/2019-09-15-1.jpg" alt="1568537520908" /></p>
 
 <p>然后就可以通过修改smali目录下相应的文件了</p>
 

@@ -1,0 +1,100 @@
+I"<h1 id="android逆向">Android逆向</h1>
+
+<h2 id="1工具">1.工具</h2>
+
+<ol>
+  <li><strong>apktool.jar</strong></li>
+  <li><strong>jd-gui.jar</strong></li>
+  <li><strong>dex2jar.zip</strong></li>
+</ol>
+
+<h2 id="2查看java源码">2.查看java源码</h2>
+
+<p>假设现在有一个test.apk，如果我们想要查看一个apk里的java源码，首先</p>
+
+<ul>
+  <li>我们通过<strong>解压apk文件得到classes.dex文件，然后将classes.dex文件放置到dex2jar目录下</strong></li>
+  <li>
+    <p>通过命令行</p>
+
+    <pre><code class="language-cmd">.\d2j-dex2jar.bat classes.dex
+</code></pre>
+  </li>
+  <li>然后就会在当前文件夹中生成<strong>classes-dex2jar.jar</strong></li>
+</ul>
+
+<p>img/2019-09-15-1.jpg</p>
+
+<ul>
+  <li>然后用<strong>jd-gui</strong>打开，即可查看源码
+<img src="img/2019-09-15-2.jpg" alt="1568537247612" /></li>
+</ul>
+
+<h2 id="2修改java源码">2.修改java源码</h2>
+
+<blockquote>
+  <p>使用dex-2jar和jd-gui只能常看源码，但不能修改，那么如何修改源码呢</p>
+</blockquote>
+
+<p>如果想要修改，需要反编译出smali文件，然后对smali文件进行修改操作，使用下边命令反编译apk:</p>
+
+<pre><code class="language-cmd">apktool.jar d test.apk
+</code></pre>
+
+<p>然后会在当前目录生成test目录，目录内容大体如下：</p>
+
+<p><img src="img/2019-09-15-1.jpg" alt="1568537520908" /></p>
+
+<p>然后就可以通过修改smali目录下相应的文件了</p>
+
+<p>当然，还需要学习一下<strong>smali</strong>的相关语法</p>
+
+<p>更多的smali的语法可以参考<a href="https://blog.csdn.net/chenrunhua/article/details/41250613">这篇文章</a></p>
+
+<h2 id="3重新打包">3.重新打包</h2>
+
+<p>利用apktool的打包功能重新打包</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.\apktool.bat b demo -o new.apk  
+# b表示打包  demo指的是用于打包的文件夹  -o xxx\xxx.apk 表示输出apk的路径以及文件名  
+</code></pre></div></div>
+
+<h2 id="4重新签名">4.重新签名</h2>
+
+<blockquote>
+  <p>打包过后的apk无法安装，因为它还没有签名</p>
+</blockquote>
+
+<p>如何签名apk</p>
+
+<ul>
+  <li>
+    <p>拷贝xxx.jks到要签名的apk目录下，没有的话可以用AS生成一个</p>
+  </li>
+  <li>
+    <p>用jarsigner签名apk</p>
+
+    <pre><code class="language-k"> #可以先看看apk是否被签名
+jarsigner -verify new.apk
+#签名
+jarsigner -digestalg SHA1 -sigalg MD5withRSA -keystore fhh.jks -storepass xxxxxxxxx -signedjar signed.apk new.apk fenghaha
+#参数含义
+#jarsigner -digestalg SHA1 -sigalg MD5withRSA -keystore [签名证书文件名] -storepass [签名证书密码]  -signedjar [签名后生成apk的文件] [被签名的apk文件] [签名证书的别名]
+</code></pre>
+  </li>
+  <li>
+    <p>签名之后就会在当前目录下生成signed.apk文件，就算签名成功了</p>
+  </li>
+</ul>
+
+<p>本人水平有限，如果有什么错误，欢迎评论指正。</p>
+
+<p>参考：</p>
+
+<p><a href="https://www.jianshu.com/p/ba9b374346dd">smali基础语法-简书</a></p>
+
+<p><a href="https://segmentfault.com/a/1190000012669267">segmentault</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/51260384?utm_source=com.microsoft.office.onenote&amp;utm_medium=social&amp;utm_oi=679082476291362816">知乎-红岩专栏</a></p>
+
+:ET
