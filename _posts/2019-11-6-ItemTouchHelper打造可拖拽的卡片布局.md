@@ -6,7 +6,7 @@ date: 2019-11-6
 author: "roger"
 head-img: "img/post-bg-js-module.jpg"
 tags:
-    - kotlin
+    - Kotlin
     - Android
 ---
 
