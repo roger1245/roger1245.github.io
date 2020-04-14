@@ -1,6 +1,6 @@
 ---
 layout:	 post
-title:	"仿造AA的recyclerView效果实现"
+title:	"仿造QQ的recyclerView效果实现"
 subtitle: ""
 date: 2020-4-14
 author: "roger"
