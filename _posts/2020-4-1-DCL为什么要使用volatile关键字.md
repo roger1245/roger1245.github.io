@@ -86,6 +86,49 @@ public class Singleton {
 
 这里用到的是volatile关键字的禁止指令重排序优化。但是volatile禁止指令重排序在JDK5之后才被修复。
 
+
+
+既然synchronized可以保证原子性，即从语句2->4 是不可分割的，要么执行完成，要么不执行完成。
+
+问：加了同步锁为什么还会进行线程的的切换呢？
+
+答：线程没有切换。我觉得是因为多核CPU实际上是多线程之间是并行执行的，虽然同步锁使得代码块具有原子性（要么执行完要么没有执行）。但其他线程是可以观察到获得锁的线程的执行的中间状态的。
+
+个人理解：sInstance就是多线程之间的共享变量。也就是临界区资源。对临界区资源的读和写都是原子的，且串行的。
+
+
+
+## 静态内部类单例模式
+
+```java
+public class SingleTon{
+  private SingleTon(){}
+ 
+  private static class SingleTonHoler{
+     private static SingleTon INSTANCE = new SingleTon();
+ }
+ 
+  public static SingleTon getInstance(){
+    return SingleTonHoler.INSTANCE;
+  }
+}
+```
+
+静态内部类的优点是：外部类加载时并不需要立即加载内部类，内部类不被加载则不去初始化INSTANCE，故而不占内存。即当SingleTon第一次被加载时，并不需要去加载SingleTonHoler，只有当getInstance()方法第一次被调用时，才会去初始化INSTANCE,第一次调用getInstance()方法会导致虚拟机加载SingleTonHoler类，这种方法不仅能确保线程安全，也能保证单例的唯一性，同时也延迟了单例的实例化。
+
+## 枚举单例
+
+```java
+public enum SingleTon{
+  INSTANCE;
+        public void method(){
+        //TODO
+     }
+}
+```
+
 参考：《Android源码设计模式》
 
 [csdn](https://blog.csdn.net/Lin_coffee/article/details/79890361)
+
+[csdn](https://blog.csdn.net/mnb65482/article/details/80458571)
